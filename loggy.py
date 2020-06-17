@@ -33,6 +33,11 @@ import threading
 import socket
 import yaml
 
+# Disable most ES logging, or it'll litter syslog
+tracer = logging.getLogger('elasticsearch')
+tracer.setLevel(logging.CRITICAL)
+tracer.addHandler(logging.FileHandler('loggy.log'))
+
 DEBUG = False
 inodes = {}
 inodes_path = {}
