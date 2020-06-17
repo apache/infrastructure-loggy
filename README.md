@@ -9,7 +9,7 @@ pipservice:
   loggy:
     tag: master
 ~~~
-There is a sample YAML file in this repo. If you are checking out loggy locally, rename this file to `loggy.yaml` and edit accordingly.
+There is a sample YAML config file in this repo. If you are checking out loggy locally, rename this file to `loggy.yaml` and edit accordingly.
 
 
 As loggy's configuration may contain secrets, you may be required to define this in EYAML.
