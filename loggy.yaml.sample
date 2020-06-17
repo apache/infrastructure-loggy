@@ -1,0 +1,30 @@
+# Loggy Jr configuration file.
+
+analyzer:
+  # This is the paths that will be (recursively) checked.
+  # /var/log would also check /var/log/tomcat/ for instance.
+  paths:
+    - /var/log/
+    - /x1/log/
+
+tags:
+
+
+# Primary and secondary JSON receiver.
+elasticsearch:
+  primary:
+    host:   yourhost.example.com
+    port:   9200
+    ssl:    false
+    prefix: ''
+
+  backup:
+    host:   backup.example.com
+    port:   9200
+    ssl:    false
+    prefix: ''
+
+rawfields:
+  # Fields that, in each document type, should be treated as non-analyzed strings.
+  httpd_access:           uri,clientip,remote_user,vhost,geo_city,geo_country,geo_combo,geo_coords,geo_lat,geo_long
+  apache_access:          url,client_ip,remote_user
