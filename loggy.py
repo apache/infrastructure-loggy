@@ -403,17 +403,27 @@ class LinuxHandler(watchdog.events.PatternMatchingEventHandler):
 
 def whoami():
     try:
-        xhostname = socket.gethostname()
-        names = [add[3] for add in socket.getaddrinfo(xhostname, None, 0, socket.SOCK_DGRAM, 0, socket.AI_CANONNAME) if add[3]]
-        if names:
-            prefix = f"{xhostname}."
-            for name in names:
+        # Get local hostname (what you see in the terminal)
+        local_hostname = socket.gethostname()
+        # Get all address info segments for the local host
+        canonical_names = [
+            address[3] for address in
+            socket.getaddrinfo(local_hostname, None, 0, socket.SOCK_DGRAM, 0, socket.AI_CANONNAME)
+            if address[3]
+        ]
+        # For each canonical name, see if we find $local_hostname.something.tld, and if so, return that.
+        if canonical_names:
+            prefix = f"{local_hostname}."
+            for name in canonical_names:
                 if name.startswith(prefix):
                     return name
-            return names[0]
+            # No match, just return the first occurrence.
+            return canonical_names[0]
     except socket.error:
         pass
+    # Fall back to socket.getfqdn
     return socket.getfqdn()
+
 
 if __name__ == "__main__":
     config = yaml.safe_load(open("loggy.yaml").read())
