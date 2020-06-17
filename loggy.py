@@ -152,9 +152,9 @@ tuples = {
 def l2fp(txt):
     key = base64.b64decode(txt.strip().split()[1].encode('ascii'))
     fp_plain = hashlib.md5(key).hexdigest()
-    fp_md5 = ':'.join(a+b for a,b in zip(fp_plain[::2], fp_plain[1::2]))
+    fp_md5 = ':'.join(a+b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
     fp_plain_sha = hashlib.sha256(key).digest()
-    fp_sha256 = base64.b64encode(fp_plain_sha).rstrip('=')
+    fp_sha256 = str(base64.b64encode(fp_plain_sha)).rstrip('=')
     return fp_md5, fp_sha256
 
 
@@ -426,17 +426,12 @@ if __name__ == "__main__":
             mytags = tag_overrides[hostname]
 
     print("Using %s as node name" % hostname)
-    try:
+    if os.path.exists(RSA_KEY):
         with open(RSA_KEY, 'r') as rsa:
             FINGERPRINT, FINGERPRINT_SHA = l2fp(rsa.read())
-        #  print("Identifying as %s" % FINGERPRINT)
-    except:
-        pass
+            print("Identifying as %s" % FINGERPRINT)
     xes = connect_es(config)
 
-    logging.basicConfig(level=logging.INFO,
-                        format='%(asctime)s - %(message)s',
-                        datefmt='%Y-%m-%d %H:%M:%S')
     observer = watchdog.observers.Observer()
     for path in config['analyzer']['paths']:
         if os.path.isdir(path):
