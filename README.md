@@ -1,7 +1,7 @@
 # infrastructure-loggy
 Loggy Jr. for ASF Infra
 
-To enable, add the following yaml:
+To enable via `pipservice`, add the following yaml to the applicable node/role yaml file:
 
 
 ~~~yaml
