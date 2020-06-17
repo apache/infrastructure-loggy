@@ -154,7 +154,7 @@ def l2fp(txt):
     fp_plain = hashlib.md5(key).hexdigest()
     fp_md5 = ':'.join(a+b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
     fp_plain_sha = hashlib.sha256(key).digest()
-    fp_sha256 = str(base64.b64encode(fp_plain_sha)).rstrip('=')
+    fp_sha256 = base64.b64encode(fp_plain_sha).decode('ascii').rstrip('=')
     return fp_md5, fp_sha256
 
 
