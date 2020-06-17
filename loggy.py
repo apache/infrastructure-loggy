@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 # Licensed to the Apache Software Foundation (ASF) under one or more
 # contributor license agreements.  See the NOTICE file distributed with
 # this work for additional information regarding copyright ownership.
@@ -56,9 +57,8 @@ RSA_KEY = '/etc/ssh/ssh_host_rsa_key.pub'
 FINGERPRINT = ''
 FINGERPRINT_SHA = ''
 
-
 es = None
-hostname = socket.getfqdn()
+
 
 regexes = {
     'apache_access': re.compile( 
@@ -401,8 +401,23 @@ class LinuxHandler(watchdog.events.PatternMatchingEventHandler):
         self.process(event)
 
 
+def whoami():
+    try:
+        xhostname = socket.gethostname()
+        names = [add[3] for add in socket.getaddrinfo(hostname, None, 0, socket.SOCK_DGRAM, 0, socket.AI_CANONNAME) if add[3]]
+        if names:
+            prefix = f"{xhostname}."
+            for name in names:
+                if name.startswith(prefix):
+                    return name
+            return names[0]
+    except socket.error:
+        pass
+    return socket.getfqdn()
+
 if __name__ == "__main__":
     config = yaml.safe_load(open("loggy.yaml").read())
+    hostname = whoami()
     if os.path.exists('/etc/dd-agent/datadog.conf'):
         dd_config.read('/etc/dd-agent/datadog.conf')
         if dd_config.has_option('Main', 'tags'):
@@ -410,7 +425,7 @@ if __name__ == "__main__":
         if hostname in tag_overrides:
             mytags = tag_overrides[hostname]
 
-    #  print("Using %s as node name" % hostname)
+    print("Using %s as node name" % hostname)
     try:
         with open(RSA_KEY, 'r') as rsa:
             FINGERPRINT, FINGERPRINT_SHA = l2fp(rsa.read())
