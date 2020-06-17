@@ -1,0 +1,11 @@
+[Unit]
+Description=Loggy Jr.
+ 
+[Service]
+Type=simple
+WorkingDirectory=/opt/loggy
+ExecStart=/usr/local/bin/pipenv run python3 loggy.py
+Restart=always
+ 
+[Install]
+WantedBy=multi-user.target
