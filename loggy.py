@@ -404,7 +404,7 @@ class LinuxHandler(watchdog.events.PatternMatchingEventHandler):
 def whoami():
     try:
         xhostname = socket.gethostname()
-        names = [add[3] for add in socket.getaddrinfo(hostname, None, 0, socket.SOCK_DGRAM, 0, socket.AI_CANONNAME) if add[3]]
+        names = [add[3] for add in socket.getaddrinfo(xhostname, None, 0, socket.SOCK_DGRAM, 0, socket.AI_CANONNAME) if add[3]]
         if names:
             prefix = f"{xhostname}."
             for name in names:
