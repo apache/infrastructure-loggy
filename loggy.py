@@ -402,6 +402,7 @@ class LinuxHandler(watchdog.events.PatternMatchingEventHandler):
 
 
 def whoami():
+    """Returns the FQDN of the box the program runs on"""
     try:
         # Get local hostname (what you see in the terminal)
         local_hostname = socket.gethostname()
