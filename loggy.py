@@ -341,13 +341,13 @@ class LinuxHandler(watchdog.events.PatternMatchingEventHandler):
                 idata = os.stat(path)
                 inode = idata.st_ino
                 if inode not in inodes:
-                    print("Opening: " + path)
+                    # print("Opening: " + path)
                     filehandles[path] = open(path, "r")
-                    print("Started watching %s (%u)" % (path, inode))
+                    # print("Started watching %s (%u)" % (path, inode))
                     filehandles[path].seek(0, 2)
                     inodes[inode] = path
                     inodes_path[path] = inode
-                    print(path, filehandles[path])
+                    # print(path, filehandles[path])
             except Exception as err:
                 #  print(err)
                 pass
