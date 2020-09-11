@@ -257,7 +257,10 @@ class NodeThread(threading.Thread):
             if DEBUG:
                 print(js_arr)
             else:
-                elasticsearch.helpers.bulk(self.xes, js_arr)
+                try:
+                    elasticsearch.helpers.bulk(self.xes, js_arr)
+                except elasticsearch.helpers.BulkIndexError:
+                    pass # Be quiet about bulk errors, so we don't loop!
         # except Exception as err:
         # print(err)
 
