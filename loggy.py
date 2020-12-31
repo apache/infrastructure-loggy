@@ -43,7 +43,6 @@ DEBUG = False
 inodes = {}
 inodes_path = {}
 filehandles = {}
-mytags = ''
 
 json_pending = {}
 last_push = {}
@@ -236,8 +235,6 @@ class NodeThread(threading.Thread):
                     js['bytes'] = int(js['bytes'])
                 except:
                     js['bytes'] = 0
-            if mytags:
-                js['@tags'] = mytags
             if 'request' in js and not 'url' in js:
                 match = re.match(r"(GET|POST)\s+(.+)\s+HTTP/.+", js['request'])
                 if match:
@@ -432,12 +429,6 @@ def whoami():
 if __name__ == "__main__":
     config = yaml.safe_load(open("loggy.yaml").read())
     hostname = whoami()
-    if os.path.exists('/etc/dd-agent/datadog.conf'):
-        dd_config.read('/etc/dd-agent/datadog.conf')
-        if dd_config.has_option('Main', 'tags'):
-            mytags = dd_config.get('Main', 'tags')
-        if hostname in tag_overrides:
-            mytags = tag_overrides[hostname]
 
     print("Using %s as node name" % hostname)
     if os.path.exists(RSA_KEY):
