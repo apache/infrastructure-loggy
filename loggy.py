@@ -137,7 +137,7 @@ class NodeThread(threading.Thread):
                     js["geo_location"] = {"lat": float(js["geo_lat"]), "lon": float(js["geo_long"])}
                 except ValueError:
                     pass
-            js["@version"] = 2
+            js["@version"] = 3
             js["@timestamp"] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime())
             js["host"] = self.parent.logger.nodename
             js["@node"] = self.parent.logger.nodename
