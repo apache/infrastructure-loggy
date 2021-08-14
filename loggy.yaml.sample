@@ -12,17 +12,9 @@ tags:
 
 # Primary and secondary JSON receiver.
 elasticsearch:
-  primary:
-    host:   yourhost.example.com
-    port:   9200
-    ssl:    false
-    prefix: ''
+  hosts:
+    - http://localhost:9200/
 
-  backup:
-    host:   backup.example.com
-    port:   9200
-    ssl:    false
-    prefix: ''
 
 rawfields:
   # Fields that, in each document type, should be treated as non-analyzed strings.
