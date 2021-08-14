@@ -276,9 +276,7 @@ class Logger:
                         rd += len(line)
                         data += line
                 self.parse_line(path, data)
-            except UnicodeDecodeError:
-                pass  # Couldn't decipher this line, ignore it.
-            except IOError:
+            except (IOError, UnicodeDecodeError):
                 try:
                     self.file_handles[path].close()
                 except IOError:
