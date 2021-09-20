@@ -25,7 +25,7 @@ regexes = {
         r"(?P<client_ip>[\d\.]+)\s"
         r"(?P<identity>\S*)\s"
         r"(?P<user>\S*)\s"
-        r"\[(?P<time>.*?)\]\s"
+        r"\[(?P<time_txt>.*?)\]\s"
         r'"(?P<request>.*?)"\s'
         r"(?P<status>\d+)\s"
         r"(?P<bytes>\S*)\s"
@@ -60,7 +60,7 @@ tuples = {
             "client_ip",
             "identity",
             "user",
-            "time",
+            "time_txt",
             "request",
             "status",
             "bytes",
