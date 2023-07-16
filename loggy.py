@@ -48,6 +48,7 @@ MAX_IDLE_TIME = 15  # If we waited more than 15 seconds to push entries, push ev
 RSA_KEY = "/etc/ssh/ssh_host_rsa_key.pub"  # RSA public key for SSH. if it exists.
 FINGERPRINT = ""
 FINGERPRINT_SHA = ""
+SUPPORTED_PROVIDERS = ("elasticsearch", "opensearch", )  # Supported database providers to look for in the config
 
 
 def l2fp(txt: str):
@@ -301,8 +302,12 @@ class ElasticParent:
         self.config = parent.config
         self.logger = parent
         self.loggers = {}
+        self.hosts = []
+        for provider in SUPPORTED_PROVIDERS:
+            if provider in parent.config:
+                self.hosts.extend(parent.config[provider].get("hosts", []))
         self.elastic = elasticsearch.Elasticsearch(
-            hosts=parent.config["elasticsearch"]["hosts"], max_retries=5, retry_on_timeout=True
+            hosts=self.hosts, max_retries=5, retry_on_timeout=True
         )
         self.indices = []
 
