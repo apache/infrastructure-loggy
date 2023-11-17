@@ -49,7 +49,7 @@ RSA_KEY = "/etc/ssh/ssh_host_rsa_key.pub"  # RSA public key for SSH. if it exist
 FINGERPRINT = ""
 FINGERPRINT_SHA = ""
 SUPPORTED_PROVIDERS = ("elasticsearch", "opensearch", )  # Supported database providers to look for in the config
-
+IGNORED_EXTS = (".1", ".2", ".3", ".4", ".5", ".6", ".7", )  # Ignore foo.log.1 etc, those are rotated.
 
 def l2fp(txt: str):
     """public key to md5/sha256 fingerprint"""
@@ -250,7 +250,7 @@ class Logger:
 
         elif (
             (event.event_type == "modified" or event.event_type == "created")
-            and (path.find(".gz") == -1)
+            and (path.find(".gz") == -1) and not any(path.endswith(ext) for ext in IGNORED_EXTS) 
             and path not in self.file_handles
         ):
             try:
