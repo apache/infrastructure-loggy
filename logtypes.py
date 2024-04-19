@@ -79,5 +79,5 @@ tuples = {
     "rsync": collections.namedtuple("rsync", ["date", "pid", "message", "filepath", "logtype", "timestamp"]),
     "pylogs": collections.namedtuple("pylogs", ["date", "type", "message", "filepath", "logtype", "timestamp"]),
     "qmail": collections.namedtuple("qmail", ["mid", "message", "filepath", "logtype", "timestamp"]),
-    "lastlog": collections.namedtuple("lastlog", ["user", "time_txt", "term", "client_ip", "filepath", "logtype", "timestamp"]),
+    "lastlog": collections.namedtuple("lastlog", ["user", "uid", "time_txt", "term", "client_ip", "filepath", "logtype", "timestamp"]),
 }
