@@ -103,7 +103,8 @@ class NodeThread(threading.Thread):
                     map_js: typing.Dict[str, typing.Dict[typing.Union[str, bool]]] = {
                         "_all": {"enabled": True},
                         "properties": {
-                            "@timestamp": {"store": True, "type": "date", "format": "yyyy/MM/dd HH:mm:ss"},
+                            "@timestamp": {"store": True, "type": "date", "format": "yyyy/MM/dd HH:mm:ss"},  # Time of logging to DB cluster
+                            "entry_timestamp": {"store": True, "type": "date", "format": "yyyy/MM/dd HH:mm:ss"},  # Optional timestamp in the log entry itself
                             "@node": {"store": True, "type": "keyword"},
                             "status": {"store": True, "type": "long"},
                             "date": {"store": True, "type": "keyword"},
@@ -157,6 +158,11 @@ class NodeThread(threading.Thread):
                     js["url"] = match.group(2)
             if "bytes" in js and isinstance(js["bytes"], str) and js["bytes"].isdigit():
                 js["bytes_int"] = int(js["bytes"])
+            
+            # Convert entry timestamp to OpenSearch datetime format
+            if "entry_timestamp" in js and isinstance(js["entry_timestamp"], str) and js["entry_timestamp"].isdigit():
+                js["entry_timestamp"] = time.strftime("%Y/%m/%d %H:%M:%S", int(js["entry_timestamp"]))
+
 
             js_arr.append({"_op_type": "index", "_index": iname, "doc": js, "_source": js})
 
