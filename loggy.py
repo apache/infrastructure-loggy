@@ -161,7 +161,7 @@ class NodeThread(threading.Thread):
             
             # Convert entry timestamp to OpenSearch datetime format
             if "entry_timestamp" in js and isinstance(js["entry_timestamp"], str) and js["entry_timestamp"].isdigit():
-                js["entry_timestamp"] = time.strftime("%Y/%m/%d %H:%M:%S", int(js["entry_timestamp"]))
+                js["entry_timestamp"] = time.strftime("%Y/%m/%d %H:%M:%S", time.gmtime(int(js["entry_timestamp"])))
 
 
             js_arr.append({"_op_type": "index", "_index": iname, "doc": js, "_source": js})
