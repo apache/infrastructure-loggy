@@ -49,7 +49,7 @@ regexes = {
     "rsync": re.compile(r"(?P<date>\S+ \d+:\d+:[\d,]+)\s+" r"\[(?P<pid>[\S.]+)\]\s+" r"(?P<message>.+)"),
     "pylogs": re.compile(r"(?P<date>\S+ \S+)\s+\[pylog\]\s+" r"\[(?P<type>[\S.]+)\]:\s+" r"(?P<message>.+)"),
     "qmail": re.compile(r"(?P<mid>@[a-f0-9]+)\s+" r"(?P<message>.+)"),
-    "lastlog": re.compile(r"(?P<user>[a-z0-9]+)\s+(?P<term>(pts/\d+|tty\d+|system))\s+" r"(?P<stats>.+)"),
+    "lastlog": re.compile(r"USER: (?P<user>([-.a-z0-9]+))\((?P<uid>(\d+))\);\s+T: \[(?P<time_txt>([^]]+))\]; LINE: (?P<term>(pts/\d+|tty\d+|system)); HOST: (?P<client_ip>[0-9a-f:.]+)"),
 }
 
 # These names must agree with the regexes above
@@ -79,5 +79,5 @@ tuples = {
     "rsync": collections.namedtuple("rsync", ["date", "pid", "message", "filepath", "logtype", "timestamp"]),
     "pylogs": collections.namedtuple("pylogs", ["date", "type", "message", "filepath", "logtype", "timestamp"]),
     "qmail": collections.namedtuple("qmail", ["mid", "message", "filepath", "logtype", "timestamp"]),
-    "lastlog": collections.namedtuple("lastlog", ["user", "term", "stats", "filepath", "logtype", "timestamp"]),
+    "lastlog": collections.namedtuple("lastlog", ["user", "time_txt", "term", "client_ip", "filepath", "logtype", "timestamp"]),
 }
