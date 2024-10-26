@@ -40,7 +40,7 @@ regexes = {
         r"(?P<message>.+)"
     ),
     "syslog": re.compile(
-        r"(?P<date>\S+\s+\d+\s+\d+:\d+:\d+)\s+(<[0-9.]+>\s+)?"
+        r"(?P<date>(\S+\s+\d+\s+\d+:\d+:\d+)|([-+:.T\d]+))\s+(<[0-9.]+>\s+)?"
         r"(?P<host>\S+)\s+"
         r"(?P<type>\S+):\s+"
         r"(?P<message>.+)"
