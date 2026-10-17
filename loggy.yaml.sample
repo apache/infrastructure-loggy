@@ -1,11 +1,10 @@
 # Loggy Jr configuration file.
 
-analyzer:
-  # This is the paths that will be (recursively) checked.
-  # /var/log would also check /var/log/tomcat/ for instance.
-  paths:
-    - /var/log/
-    - /x1/log/
+# This defines the paths that will be (recursively) checked.
+# /var/log would also check /var/log/tomcat/ for instance.
+paths:
+  - /var/log/
+  - /x1/log/
 
 tags:
 
